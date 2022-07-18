@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import LandingScreen from './pages/LandingScreen';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<LandingScreen />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/switches" element={<ThemeSwitcher />} />
         {/* <Route element={<PrivateRoute user={user} redirectPath="/login" />}>
           <Route path="dashboard" element = {<Dashboard />} />
