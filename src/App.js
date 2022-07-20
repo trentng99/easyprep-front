@@ -14,7 +14,6 @@ import Home from './pages/Home';
 
 function App() {
   const [user, setUser] = useState();
-  console.log(user)
   return (
     <Router>
     <AuthProvider setUser={setUser}>
@@ -24,7 +23,7 @@ function App() {
         <Route path="/login" element={<Login user={user}/>} />
         <Route path="/switches" element={<ThemeSwitcher />} />
         <Route element={<PrivateRoute user={user} redirectPath="/login" />}>
-              <Route path="/home" element = {<Home />} />
+              <Route path="/home" element = {<Home user={user}/>} />
         </Route>
       </Routes>
     </AuthProvider>
