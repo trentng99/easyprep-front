@@ -1,12 +1,13 @@
 import React, {useState, useRef} from 'react';
 import { useAuth } from '../contexts/AuthContext'
-import {Navigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function Login({user}) {
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
   const [error, setError] = useState("")
+  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -19,23 +20,19 @@ function Login({user}) {
   }
 
   if(user) {
-    return <Navigate to="/home"/>
+    navigate('/home')
   }
 
   return (
     <div className="Auth-form-container">
-    <form className="Auth-form">
+      {error}
+    <form onSubmit={handleSubmit} className="Auth-form">
       <div className="Auth-form-content">
         <h3 className="Auth-form-title">Log In</h3>
-        <div className="text-center">
-          Not registered yet?{" "}
-          <a className="link-primary" href="/signup">
-            Sign Up
-          </a>
-        </div>
         <div className="form-group mt-3">
           <label>Email address</label>
           <input
+            ref={emailRef}
             type="email"
             className="form-control mt-1"
             placeholder="Enter email"
@@ -44,6 +41,7 @@ function Login({user}) {
         <div className="form-group mt-3">
           <label>Password</label>
           <input
+            ref={passwordRef}
             type="password"
             className="form-control mt-1"
             placeholder="Enter password"
@@ -54,9 +52,6 @@ function Login({user}) {
             Submit
           </button>
         </div>
-        <p className="text-center mt-2">
-          Forgot <a href="#">password?</a>
-        </p>
       </div>
     </form>
   </div>
