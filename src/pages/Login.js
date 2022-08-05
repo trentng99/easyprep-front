@@ -29,6 +29,12 @@ function Login({user}) {
     <form onSubmit={handleSubmit} className="Auth-form">
       <div className="Auth-form-content">
         <h3 className="Auth-form-title">Log In</h3>
+        <div className="text-center">
+            Don't have an account?{" "}
+            <a className="link-primary" href='/signup'>
+              Sign Up
+            </a>
+          </div>
         <div className="form-group mt-3">
           <label>Email address</label>
           <input

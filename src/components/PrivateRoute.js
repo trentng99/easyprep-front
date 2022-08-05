@@ -1,8 +1,5 @@
 import React from 'react'
 import {
-    Routes,
-    Route,
-    Link,
     Navigate,
     Outlet,
   } from 'react-router-dom';

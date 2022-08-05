@@ -5,25 +5,20 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { db } from "../firebase-config";
-import {
-  collection,
-  addDoc,
-} from "firebase/firestore";
+import {doc, setDoc} from "firebase/firestore";
 
-function SignUp({user}) {
+function SignUp({ state, setState}) {
   const navigate = useNavigate();
+  const emailRef = useRef()
   const passwordRef = useRef()
   const cPasswordRef = useRef()
   const { register } = useAuth()
   const [error, setError] = useState("")
-  const [state, setState] = useState({})
-
-  //Reference to users collection in firebase db
-  const userCollectionRef = collection(db, "users")
 
   //Handle Form Submission
   async function handleSubmit(e) {
     e.preventDefault()
+    setError('')
     try {
       if(cPasswordRef.current.value === passwordRef.current.value) {
         await register(state.email, passwordRef.current.value)
@@ -50,7 +45,7 @@ function SignUp({user}) {
 
   //Function to throw data into database
   const addUser = async () => {
-    await addDoc(userCollectionRef, state);
+    await setDoc(doc(db, "users", state.email), state);
   }
 
   function showPassword() {
@@ -89,6 +84,7 @@ function SignUp({user}) {
             <input
               name='email'
               type="email"
+              ref={emailRef}
               onChange={handleChange}
               className="form-control mt-1"
               placeholder="Email Address"
