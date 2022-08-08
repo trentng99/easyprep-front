@@ -27,7 +27,7 @@ function App() {
     <Router>
     <AuthProvider user={user} setUser={setUser}>
       <Routes>
-        <Route path="/" element={<LandingScreen />} />
+        <Route path="/" element={<LandingScreen user={user}/>} />
         <Route path="/signup" element={<SignUp  user={user} state={state} setState={setState}/>} />
         <Route path="/login" element={<Login user={user}/>} />
         <Route element={<PrivateRoute user={user} redirectPath="/login" />}>

@@ -1,8 +1,15 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container';
 import {Row, Col, Image, Stack, Button} from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom'
 
-function LandingScreen() {
+function LandingScreen({user}) {
+  const navigate = useNavigate()
+
+  if(user) {
+    navigate('/home')
+  }
+
   return (
     <Container className='d-flex'>
       {/* Logo */}
