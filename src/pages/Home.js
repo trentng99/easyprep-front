@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import {Button, Container} from 'react-bootstrap';
+import {Button, Container, InputGroup, FormControl} from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext'
 import { db } from "../firebase-config";
 import RecipeCard from '../components/RecipeCard';
@@ -25,13 +25,25 @@ function Home({ user }) {
 
 
   return (
-    <Container className='mb-2 App min-vh-100 justify-content-center align-items-center'>
-      <h1 xs={12}>Hey {userdata.name}</h1>
-      <Button xs={12} variant="primary" size="lg" onClick={logout}>
-        Sign Out
-      </Button>
+    <div className='mb-2 App min-vh-100 justify-content-center align-items-center'>
+      <div className="headerPart py-5">
+        <Container>
+          <h1 className="text-center text-orange font-weight-bold" xs={12}>Hey {userdata.name}!</h1>
+          <p className="text-center text-white" xs={12}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <InputGroup className="col-12">
+            <FormControl
+              placeholder="Search"
+              aria-label="Search"
+              aria-describedby="basic-addon2"
+            />
+            <Button variant="primary" id="button-addon2">
+              Search
+            </Button>
+          </InputGroup>
+        </Container>
+      </div>
       <RecipeCard></RecipeCard>
-    </Container>
+    </div>
   )
 }
 
