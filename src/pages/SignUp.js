@@ -24,7 +24,7 @@ function SignUp({ state, setState}) {
         await register(state.email, passwordRef.current.value)
         if(register) {
           await addUser()
-          navigate('/buildprofile')
+          navigate('/buildallergies')
         }
       } else {
         setError('Password do not match')
