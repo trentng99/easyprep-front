@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, CardImg, Container } from 'react-bootstrap';
-import { db, storage } from "../firebase-config";
+import { Card, CardImg, Container } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, useNavigate } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
+
+import { db } from "../firebase-config";
 import {
     collection,
     getDocs,
 } from "firebase/firestore";
-import { getDownloadURL, ref } from 'firebase/storage';
 
-function RecipeCard() {
-    const [recipes, setRecipes] = useState([]);
+function RecipeCard({recipes, setRecipes}) {
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         const recipesCollectionRef = collection(db, "recipes");
@@ -28,13 +31,23 @@ function RecipeCard() {
         return trimmedString + '...'
     }
 
+    const goRecipePage = (recipe) => {
+       navigate('/recipe/' + recipe.name, {state: recipe})
+    }
+
     return (
         <Container className="d-flex flex-wrap">
             {recipes.map((recipe) => {
                 return (
-                    <div className='col-6 col-lg-3 p-3 fu'>
-                        <Card>
-                            <CardImg variant="top"  src={'images/' + recipe.image} />
+                    <div
+                        className='col-6 col-lg-3 p-3 fu'
+                        key={recipe.name}
+                        onClick={() => goRecipePage(
+                            recipe
+                        )}
+                        style={{ cursor: "pointer" }}>
+                        <Card tag="a" >
+                            <CardImg variant="top" src={'images/' + recipe.image} />
                             <Card.Body>
                                 <Card.Text>{recipe.cuisine}</Card.Text>
                                 <Card.Title className='card-subtitle'>{recipe.name}</Card.Title>

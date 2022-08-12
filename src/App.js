@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import BuildAllergies from './pages/BuildAllergies';
 import BuildCuisine from './pages/BuildCuisine';
+import RecipePage from './pages/RecipePage';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     allergies:[],
     cuisines:[]
   })
+  const [recipes, setRecipes] = useState([]);
 
   return (
     <Router>
@@ -31,9 +33,10 @@ function App() {
         <Route path="/signup" element={<SignUp  user={user} state={state} setState={setState}/>} />
         <Route path="/login" element={<Login user={user}/>} />
         <Route element={<PrivateRoute user={user} redirectPath="/login" />}>
-            <Route path="/home" element = {<Home user={user}/>} />
+            <Route path="/home" element = {<Home user={user} recipes={recipes} setRecipes={setRecipes}/>} />
             <Route path="/buildallergies" element = {<BuildAllergies user={user} state={state} setState={setState}/>} />
             <Route path="/buildcuisine" element = {<BuildCuisine user={user} state={state} setState={setState}/>} />
+            <Route path="/recipe/:Name" element = {<RecipePage user={user} recipes={recipes}/> }/>
         </Route>
       </Routes>
     </AuthProvider>

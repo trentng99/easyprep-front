@@ -8,7 +8,7 @@ import {
   doc
 } from "firebase/firestore";
 
-function Home({ user }) {
+function Home({ user, recipes, setRecipes }) {
   const { logout } = useAuth()
   const [userdata, setUserData] = useState([]);
 
@@ -42,7 +42,7 @@ function Home({ user }) {
           </InputGroup>
         </Container>
       </div>
-      <RecipeCard></RecipeCard>
+      <RecipeCard recipes={recipes} setRecipes={setRecipes}></RecipeCard>
     </div>
   )
 }
