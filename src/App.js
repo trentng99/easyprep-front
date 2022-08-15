@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import BuildAllergies from './pages/BuildAllergies';
 import BuildCuisine from './pages/BuildCuisine';
 import RecipePage from './pages/RecipePage';
+import Profile from './pages/Profile';
 import { db } from "./firebase-config";
 import {
   getDoc,
@@ -34,13 +35,15 @@ function App() {
   })
 
   useEffect(() => {
-    if (user.email) {
-      const usersCollectionRef = doc(db, "users", user.email);
-      const getUsers = async () => {
-        const data = await getDoc(usersCollectionRef);
-        setUserData(data.data());
-      };
-      getUsers();
+    if(user) {
+      if (user.email) {
+        const usersCollectionRef = doc(db, "users", user.email);
+        const getUsers = async () => {
+          const data = await getDoc(usersCollectionRef);
+          setUserData(data.data());
+        };
+        getUsers();
+      }
     }
   }, [user]);
 
@@ -55,6 +58,7 @@ function App() {
             <Route path="/home" element = {<Home recipes={recipes} setRecipes={setRecipes} userdata={userdata}/>} />
             <Route path="/buildallergies" element = {<BuildAllergies user={user} state={state} setState={setState}/>} />
             <Route path="/buildcuisine" element = {<BuildCuisine user={user} state={state} setState={setState}/>} />
+            <Route path="/profile" element = {<Profile/>} />
             <Route path="/recipe/:Name" element = {<RecipePage user={user} state={state} userdata={userdata} setUserData={setUserData}/> }/>
         </Route>
       </Routes>

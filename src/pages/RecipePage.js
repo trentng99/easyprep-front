@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from '../firebase-config';
 import { Container, Image, Row, Col, Form, ToggleButton } from 'react-bootstrap';
-import { BrowserRouter as Router, Routes, useNavigate} from "react-router-dom";
+import { BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
 
 
 
@@ -13,9 +13,9 @@ function RecipePage({ userdata, user, setUserData }) {
     let userCollectionRef
     const navigate = useNavigate()
 
-    useEffect(()=> {
+    useEffect(() => {
         if (user.email) {
-        updateDoc(userCollectionRef,  userdata )
+            updateDoc(userCollectionRef, userdata)
         }
     }, [userdata, userCollectionRef])
 
@@ -32,7 +32,22 @@ function RecipePage({ userdata, user, setUserData }) {
         }))
     }
 
-    console.log(state.recipe.id)
+    //Function to update data in database
+    const likedRecipe = async () => {
+        if (!userdata.liked.includes(state.recipe.id)) {
+            console.log('adding')
+            await setUserData(previousState => ({
+                ...userdata,
+                liked: [...previousState.liked, state.recipe.id]
+            }))
+        } else {
+            console.log('deleting')
+            await setUserData(previousState => ({
+                ...userdata,
+                liked: previousState.liked.filter(recipe => recipe !== state.recipe.id)
+            }));
+        }
+    }
 
     const goPrevPage = () => {
         navigate(-1)
@@ -42,7 +57,7 @@ function RecipePage({ userdata, user, setUserData }) {
         if (userdata.cooked) {
             if (userdata.cooked.includes(state.recipe.id)) {
                 return (
-                    <button className='success-button'>
+                    <button  className='success-button'>
                         Added To Your Cooked Recipes
                     </button>
                 )
@@ -57,15 +72,26 @@ function RecipePage({ userdata, user, setUserData }) {
         }
     }
 
-    const isLikedButton = (e) => {
-        setChecked(e)
-        const likedRecipe = userdata.liked
-        if(userdata.liked) {
-            console.log(likedRecipe)
-            console.log(likedRecipe.includes(state.recipe.id))
-            likedRecipe.includes(state.recipe.id) ? 
-            updateDoc(userCollectionRef, { liked: arrayRemove(state.recipe.id) }): 
-            updateDoc(userCollectionRef, { liked: arrayUnion(state.recipe.id) })
+    const IsLikedButton = () => {
+        if (userdata.cooked) {
+            if (userdata.liked.includes(state.recipe.id)) {
+                return (
+                    <button onClick={likedRecipe} className='success-button'>
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                    </button>
+                )
+            }
+            else {
+                return (
+                    <button onClick={likedRecipe} className='primary-button'>
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                    </button>
+                )
+            }
         }
     }
 
@@ -77,17 +103,7 @@ function RecipePage({ userdata, user, setUserData }) {
                     <span className="material-symbols-outlined" onClick={goPrevPage} style={{ cursor: "pointer" }}>
                         arrow_back
                     </span>
-                    <ToggleButton
-                        className="mb-2"
-                        id="toggle-check"
-                        type="checkbox"
-                        variant="outline-primary"
-                        checked={checked}
-                        value="1"
-                        onChange={(e) => isLikedButton(e.currentTarget.checked)}
-                    >
-                        Checked
-                    </ToggleButton>
+                    <IsLikedButton />
                 </Container>
                 <div className='pt-2'>
                     {state.recipe.cuisine}

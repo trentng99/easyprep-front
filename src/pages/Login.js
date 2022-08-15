@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import { useAuth } from '../contexts/AuthContext'
-import {useNavigate} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 
 function Login({user}) {
   const emailRef = useRef()

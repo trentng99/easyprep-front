@@ -1,13 +1,14 @@
 import React from 'react'
-import {Button, Container, InputGroup, FormControl} from 'react-bootstrap';
+import { Button, Container, InputGroup, FormControl, Row, Col, Image } from 'react-bootstrap';
+import HeaderBar from '../components/HeaderBar';
+
 import RecipeCard from '../components/RecipeCard';
-
 function Home({ recipes, setRecipes, userdata }) {
-
   return (
     <div className='mb-2 App min-vh-100 justify-content-center align-items-center'>
-      <div className="headerPart py-5">
+      <div className="headerPart pb-5 pt-4">
         <Container>
+          <HeaderBar />
           <h1 className="text-center text-orange font-weight-bold" xs={12}>Hey {userdata.name}!</h1>
           <p className="text-center text-white" xs={12}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <InputGroup className="col-12">
