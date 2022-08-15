@@ -1,28 +1,8 @@
-import React, { useState, useEffect} from 'react'
+import React from 'react'
 import {Button, Container, InputGroup, FormControl} from 'react-bootstrap';
-import { useAuth } from '../contexts/AuthContext'
-import { db } from "../firebase-config";
 import RecipeCard from '../components/RecipeCard';
-import {
-  getDoc,
-  doc
-} from "firebase/firestore";
 
-function Home({ user, recipes, setRecipes }) {
-  const { logout } = useAuth()
-  const [userdata, setUserData] = useState([]);
-
-  useEffect(() => {
-    if (user.email) {
-      const usersCollectionRef = doc(db, "users", user.email);
-      const getUsers = async () => {
-        const data = await getDoc(usersCollectionRef);
-        setUserData(data.data());
-      };
-      getUsers();
-    }
-  }, [user]);
-
+function Home({ recipes, setRecipes, userdata }) {
 
   return (
     <div className='mb-2 App min-vh-100 justify-content-center align-items-center'>
@@ -42,7 +22,7 @@ function Home({ user, recipes, setRecipes }) {
           </InputGroup>
         </Container>
       </div>
-      <RecipeCard recipes={recipes} setRecipes={setRecipes}></RecipeCard>
+      <RecipeCard recipes={recipes} setRecipes={setRecipes} userdata={userdata}></RecipeCard>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect}  from 'react';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -12,18 +12,37 @@ import Home from './pages/Home';
 import BuildAllergies from './pages/BuildAllergies';
 import BuildCuisine from './pages/BuildCuisine';
 import RecipePage from './pages/RecipePage';
+import { db } from "./firebase-config";
+import {
+  getDoc,
+  doc
+} from "firebase/firestore";
 
 
 function App() {
   const [user, setUser] = useState({});
+  const [userdata, setUserData] = useState([]);
+  const [recipes, setRecipes] = useState([]);
   const [state, setState] = useState({
     user_id: '',
     name:'',
     email:'',
     allergies:[],
-    cuisines:[]
+    cuisines:[],
+    cooked:[],
+    liked:[]
   })
-  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    if (user.email) {
+      const usersCollectionRef = doc(db, "users", user.email);
+      const getUsers = async () => {
+        const data = await getDoc(usersCollectionRef);
+        setUserData(data.data());
+      };
+      getUsers();
+    }
+  }, [user]);
 
   return (
     <Router>
@@ -33,10 +52,10 @@ function App() {
         <Route path="/signup" element={<SignUp  user={user} state={state} setState={setState}/>} />
         <Route path="/login" element={<Login user={user}/>} />
         <Route element={<PrivateRoute user={user} redirectPath="/login" />}>
-            <Route path="/home" element = {<Home user={user} recipes={recipes} setRecipes={setRecipes}/>} />
+            <Route path="/home" element = {<Home recipes={recipes} setRecipes={setRecipes} userdata={userdata}/>} />
             <Route path="/buildallergies" element = {<BuildAllergies user={user} state={state} setState={setState}/>} />
             <Route path="/buildcuisine" element = {<BuildCuisine user={user} state={state} setState={setState}/>} />
-            <Route path="/recipe/:Name" element = {<RecipePage user={user} recipes={recipes}/> }/>
+            <Route path="/recipe/:Name" element = {<RecipePage user={user} state={state} userdata={userdata} setUserData={setUserData}/> }/>
         </Route>
       </Routes>
     </AuthProvider>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Card, CardImg, Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, useNavigate } from "react-router-dom";
-import { useSearchParams } from 'react-router-dom';
 
 import { db } from "../firebase-config";
 import {
@@ -9,7 +8,7 @@ import {
     getDocs,
 } from "firebase/firestore";
 
-function RecipeCard({recipes, setRecipes}) {
+function RecipeCard({recipes, setRecipes, userdata}) {
     const navigate = useNavigate()
 
 
@@ -23,16 +22,15 @@ function RecipeCard({recipes, setRecipes}) {
         };
         getRecipes()
 
-    }, []);
+    }, [setRecipes]);
 
     const shortenString = (string) => {
-        var length = 20;
         var trimmedString = string.substring(0, 40);
         return trimmedString + '...'
     }
 
     const goRecipePage = (recipe) => {
-       navigate('/recipe/' + recipe.name, {state: recipe})
+       navigate('/recipe/' + recipe.name, {state: {recipe:recipe, userdata: userdata}})
     }
 
     return (
@@ -46,8 +44,8 @@ function RecipeCard({recipes, setRecipes}) {
                             recipe
                         )}
                         style={{ cursor: "pointer" }}>
-                        <Card tag="a" >
-                            <CardImg variant="top" src={'images/' + recipe.image} />
+                        <Card tag="a" className='card'>
+                            <CardImg className='card-img' variant="top" src={'images/' + recipe.image} />
                             <Card.Body>
                                 <Card.Text>{recipe.cuisine}</Card.Text>
                                 <Card.Title className='card-subtitle'>{recipe.name}</Card.Title>
