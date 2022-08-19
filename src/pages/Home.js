@@ -1,9 +1,28 @@
-import React from 'react'
-import { Button, Container, InputGroup, FormControl, Row, Col, Image } from 'react-bootstrap';
+import React, {useEffect} from 'react'
+import { Button, Container, InputGroup, FormControl } from 'react-bootstrap';
 import HeaderBar from '../components/HeaderBar';
+import { db } from "../firebase-config";
+import {
+    collection,
+    getDocs,
+} from "firebase/firestore";
 
 import RecipeCard from '../components/RecipeCard';
-function Home({ recipes, setRecipes, userdata }) {
+function Home({ recipes, setRecipes, userdata}) {
+
+  useEffect(() => {
+    const recipesCollectionRef = collection(db, "recipes");
+
+    //Import recipes into a state array
+    const getRecipes = async () => {
+        const data = await getDocs(recipesCollectionRef);
+        setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        console.log(recipes)
+    };
+    getRecipes()
+
+}, [setRecipes]);
+
   return (
     <div className='mb-2 App min-vh-100 justify-content-center align-items-center'>
       <div className="headerPart pb-5 pt-4">
@@ -23,7 +42,10 @@ function Home({ recipes, setRecipes, userdata }) {
           </InputGroup>
         </Container>
       </div>
-      <RecipeCard recipes={recipes} setRecipes={setRecipes} userdata={userdata}></RecipeCard>
+      <RecipeCard
+        recipes={recipes}
+        setRecipes={setRecipes}
+        userdata={userdata} />
     </div>
   )
 }

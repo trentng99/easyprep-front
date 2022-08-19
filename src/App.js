@@ -4,6 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { db } from "./firebase-config";
+import {
+  getDoc,
+  doc
+} from "firebase/firestore";
 import PrivateRoute from './components/PrivateRoute';
 import LandingScreen from './pages/LandingScreen';
 import SignUp from './pages/SignUp';
@@ -13,11 +18,7 @@ import BuildAllergies from './pages/BuildAllergies';
 import BuildCuisine from './pages/BuildCuisine';
 import RecipePage from './pages/RecipePage';
 import Profile from './pages/Profile';
-import { db } from "./firebase-config";
-import {
-  getDoc,
-  doc
-} from "firebase/firestore";
+import SavedRecipes from './pages/SavedRecipes';
 
 
 function App() {
@@ -58,8 +59,9 @@ function App() {
             <Route path="/home" element = {<Home recipes={recipes} setRecipes={setRecipes} userdata={userdata}/>} />
             <Route path="/buildallergies" element = {<BuildAllergies user={user} state={state} setState={setState}/>} />
             <Route path="/buildcuisine" element = {<BuildCuisine user={user} state={state} setState={setState}/>} />
-            <Route path="/profile" element = {<Profile/>} />
-            <Route path="/recipe/:Name" element = {<RecipePage user={user} state={state} userdata={userdata} setUserData={setUserData}/> }/>
+            <Route path="/profile" element = {<Profile userdata={userdata}/>} />
+            <Route path="/profile/saved-recipes" element = {<SavedRecipes userdata={userdata} recipes={recipes} setRecipes={setRecipes}/>} />
+            <Route path="/recipe/:Name" element = {<RecipePage user={user} userdata={userdata} setUserData={setUserData}/> }/>
         </Route>
       </Routes>
     </AuthProvider>

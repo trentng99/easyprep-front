@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, updateDoc} from "firebase/firestore";
 import { db } from '../firebase-config';
-import { Container, Image, Row, Col, Form, ToggleButton } from 'react-bootstrap';
+import { Container, Image, Row, Col, Form } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
-
+import LikeButton from '../components/LikeButton';
+import CookButton from '../components/CookButton';
 
 
 function RecipePage({ userdata, user, setUserData }) {
@@ -24,76 +25,10 @@ function RecipePage({ userdata, user, setUserData }) {
         userCollectionRef = doc(db, "users", user.email)
     }
 
-    //Function to update data in database
-    const cookedRecipe = async () => {
-        await setUserData(previousState => ({
-            ...userdata,
-            cooked: [...previousState.cooked, state.recipe.id]
-        }))
-    }
-
-    //Function to update data in database
-    const likedRecipe = async () => {
-        if (!userdata.liked.includes(state.recipe.id)) {
-            console.log('adding')
-            await setUserData(previousState => ({
-                ...userdata,
-                liked: [...previousState.liked, state.recipe.id]
-            }))
-        } else {
-            console.log('deleting')
-            await setUserData(previousState => ({
-                ...userdata,
-                liked: previousState.liked.filter(recipe => recipe !== state.recipe.id)
-            }));
-        }
-    }
-
     const goPrevPage = () => {
         navigate(-1)
     }
 
-    const IsCookedButton = () => {
-        if (userdata.cooked) {
-            if (userdata.cooked.includes(state.recipe.id)) {
-                return (
-                    <button  className='success-button'>
-                        Added To Your Cooked Recipes
-                    </button>
-                )
-            }
-            else {
-                return (
-                    <button onClick={cookedRecipe} className='primary-button'>
-                        I've Cooked This
-                    </button>
-                )
-            }
-        }
-    }
-
-    const IsLikedButton = () => {
-        if (userdata.cooked) {
-            if (userdata.liked.includes(state.recipe.id)) {
-                return (
-                    <button onClick={likedRecipe} className='success-button'>
-                        <span class="material-symbols-outlined">
-                            favorite
-                        </span>
-                    </button>
-                )
-            }
-            else {
-                return (
-                    <button onClick={likedRecipe} className='primary-button'>
-                        <span class="material-symbols-outlined">
-                            favorite
-                        </span>
-                    </button>
-                )
-            }
-        }
-    }
 
     return (
         <div className='bg-grey'>
@@ -103,7 +38,7 @@ function RecipePage({ userdata, user, setUserData }) {
                     <span className="material-symbols-outlined" onClick={goPrevPage} style={{ cursor: "pointer" }}>
                         arrow_back
                     </span>
-                    <IsLikedButton />
+                    <LikeButton state={state} setUserData={setUserData} userdata={userdata} />
                 </Container>
                 <div className='pt-2'>
                     {state.recipe.cuisine}
@@ -167,7 +102,7 @@ function RecipePage({ userdata, user, setUserData }) {
                     })}
                 </div>
                 <div className="d-grid gap-2 py-4">
-                    <IsCookedButton></IsCookedButton>
+                    <CookButton state={state} setUserData={setUserData} userdata={userdata}/>
                 </div>
             </Container>
         </div>
