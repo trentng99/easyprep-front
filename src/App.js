@@ -19,6 +19,7 @@ import BuildCuisine from './pages/BuildCuisine';
 import RecipePage from './pages/RecipePage';
 import Profile from './pages/Profile';
 import SavedRecipes from './pages/SavedRecipes';
+import CookedRecipes from './pages/CookedRecipes';
 
 
 function App() {
@@ -60,7 +61,8 @@ function App() {
             <Route path="/buildallergies" element = {<BuildAllergies user={user} state={state} setState={setState}/>} />
             <Route path="/buildcuisine" element = {<BuildCuisine user={user} state={state} setState={setState}/>} />
             <Route path="/profile" element = {<Profile userdata={userdata}/>} />
-            <Route path="/profile/saved-recipes" element = {<SavedRecipes userdata={userdata} recipes={recipes} setRecipes={setRecipes}/>} />
+            <Route path="/profile/saved-recipes" element = {<SavedRecipes userdata={userdata}/>} />
+            <Route path="/profile/cooked-recipes" element = {<CookedRecipes userdata={userdata}/>} />
             <Route path="/recipe/:Name" element = {<RecipePage user={user} userdata={userdata} setUserData={setUserData}/> }/>
         </Route>
       </Routes>

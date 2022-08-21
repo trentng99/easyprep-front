@@ -20,6 +20,9 @@ function Profile({userdata}) {
                 <Button variant="primary" size="lg" onClick={()=>directTo('saved-recipes')}>
                     Saved Recipes
                 </Button>
+                <Button variant="primary" size="lg" onClick={()=>directTo('cooked-recipes')}>
+                    Cooked Recipes
+                </Button>
                 <Button type="submit" size="lg" className="btn btn-primary" onClick={logout}>
                     Log Out
                 </Button>

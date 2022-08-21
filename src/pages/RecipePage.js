@@ -16,6 +16,7 @@ function RecipePage({ userdata, user, setUserData }) {
 
     useEffect(() => {
         if (user.email) {
+            userCollectionRef = doc(db, "users", user.email)
             updateDoc(userCollectionRef, userdata)
         }
     }, [userdata, userCollectionRef])

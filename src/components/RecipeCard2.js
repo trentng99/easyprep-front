@@ -15,28 +15,32 @@ function RecipeCard({recipes, userdata}) {
     }
 
     return (
-        <Container className="d-flex flex-wrap">
+        <Container className="d-flex flex-wrap p-0">
             {recipes.map((recipe, index) => {
                 return (
                     <div
-                        className='col-6 col-lg-3 p-3 fu'
+                        className='col-12 p-3'
                         key={index}
                         onClick={() => goRecipePage(
                             recipe
                         )}
                         style={{ cursor: "pointer" }}>
-                        <Card tag="a" className='card'>
-                            <CardImg className='card-img' variant="top" src={'/images/' + recipe.image} />
-                            <Card.Body>
-                                <Card.Text>{recipe.cuisine}</Card.Text>
-                                <Card.Title className='card-subtitle'>{recipe.name}</Card.Title>
-                                <Card.Text>
-                                    {shortenString(recipe.description)}
+                        <Card tag="a" className='d-flex flex-row card2'>
+                            <CardImg className='col-6 cover w-100 p-0' variant="top" src={'/images/' + recipe.image} />
+                            <Card.Body className='d-flex flex-column justify-content-between'>
+                                <div>
+                                    <Card.Title className='card-subtitle py-4'>{recipe.name}</Card.Title>
+                                    <Card.Text>
+                                        Cooked On: {userdata.cooked.slice().reverse()[index].time_cooked}
+                                    </Card.Text>
+                                </div>
+                                <Card.Text className='d-flex flex-row align-content-center'>
+                                    <Card.Text className='pr-2 steps'>Cook Again</Card.Text> 
+                                    <span className="material-symbols-outlined steps">arrow_forward</span>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                     </div>
-
                 )
             })}
         </Container>

@@ -44,7 +44,6 @@ function Home({ recipes, setRecipes, userdata}) {
       </div>
       <RecipeCard
         recipes={recipes}
-        setRecipes={setRecipes}
         userdata={userdata} />
     </div>
   )

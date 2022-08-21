@@ -6,6 +6,7 @@ function LikeButton({state, setUserData, userdata}) {
     const likedRecipe = async () => {
         if (!userdata.liked.includes(state.recipe.id)) {
             console.log('adding')
+            console.log(state.recipe.id)
             await setUserData(previousState => ({
                 ...userdata,
                 liked: [...previousState.liked, state.recipe.id]
@@ -23,7 +24,7 @@ function LikeButton({state, setUserData, userdata}) {
         if (userdata.liked.includes(state.recipe.id)) {
             return (
                 <button onClick={likedRecipe} className='success-button'>
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                         favorite
                     </span>
                 </button>
@@ -32,7 +33,7 @@ function LikeButton({state, setUserData, userdata}) {
         else {
             return (
                 <button onClick={likedRecipe} className='primary-button'>
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                         favorite
                     </span>
                 </button>

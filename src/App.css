@@ -61,6 +61,10 @@ label {
   height: 440px;
 }
 
+.card2 {
+  height: 280px;
+}
+
 h5 {
   color: #031D48;
   font-size: 20px;
@@ -129,4 +133,12 @@ h5 {
 .logo {
   width: 50px;
   color: white;
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.recipecard2 {
+  max-height: 120px;
 }

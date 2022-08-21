@@ -8,7 +8,7 @@ import {
     getDocs,
 } from "firebase/firestore";
 
-function SavedRecipes({ recipes, setRecipes, userdata }) {
+function SavedRecipes({userdata }) {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
@@ -17,21 +17,18 @@ function SavedRecipes({ recipes, setRecipes, userdata }) {
     //Import recipes into a state array
     const getRecipes = async () => {
       const data = await getDocs(recipesCollectionRef);
-
+      setFilteredRecipes([])
       data.docs.map((doc) => {
         userdata.liked.map((likedRecipe) => {
-          if(doc.id == likedRecipe) {
+          if(doc.id === likedRecipe) {
             setFilteredRecipes(current => [...current, doc.data()])
-            console.log(filteredRecipes)
           }
         })
       }
       )
     };
-
     getRecipes()
-
-  }, [setRecipes, setFilteredRecipes, userdata]);
+  }, [userdata]);
 
   return (
     <Container>
@@ -40,7 +37,6 @@ function SavedRecipes({ recipes, setRecipes, userdata }) {
       <RecipeCard
         recipes={filteredRecipes}
         userdata={userdata} />
-
     </Container>
   )
 }
