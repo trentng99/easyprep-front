@@ -20,6 +20,7 @@ import RecipePage from './pages/RecipePage';
 import Profile from './pages/Profile';
 import SavedRecipes from './pages/SavedRecipes';
 import CookedRecipes from './pages/CookedRecipes';
+import CookSuccess from './pages/CookSuccess';
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
             <Route path="/profile/saved-recipes" element = {<SavedRecipes userdata={userdata}/>} />
             <Route path="/profile/cooked-recipes" element = {<CookedRecipes userdata={userdata}/>} />
             <Route path="/recipe/:Name" element = {<RecipePage user={user} userdata={userdata} setUserData={setUserData}/> }/>
+            <Route path="/cooksuccess" element = {<CookSuccess/> }/>
         </Route>
       </Routes>
     </AuthProvider>

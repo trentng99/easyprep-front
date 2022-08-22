@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react'
+import { BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
+
 
 function CookButton({state, setUserData, userdata}) {
 
     const [cooked, setCooked] = useState([])
+    const navigate = useNavigate()
+
 
     //Function to update data in database
     const cookedRecipe = async () => {
@@ -10,6 +14,7 @@ function CookButton({state, setUserData, userdata}) {
             ...userdata,
             cooked: [...previousState.cooked, { id: state.recipe.id, time_cooked: Date().toLocaleString() }]
         }))
+        navigate('/cooksuccess')
     }
 
     useEffect(() => {
