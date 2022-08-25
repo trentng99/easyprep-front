@@ -12,7 +12,7 @@ function HeaderBar() {
     return (
         <Navbar key={false} expand={false} className="mb-3">
             <Container fluid>
-                <Image fluid className='logo' src='/chef.png' alt="Cooking Image" />
+                <Image fluid className='logo text-white' src='/chef.png' alt="Cooking Image" />
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-false`} className='bg-white' />
                 <Navbar.Offcanvas
                     id={`offcanvasNavbar-expand-false`}
@@ -31,9 +31,6 @@ function HeaderBar() {
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link href="/profile">Profile</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link href="/search">Search Recipes</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Offcanvas.Body>

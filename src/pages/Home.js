@@ -1,16 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Container, InputGroup, FormControl, Dropdown } from 'react-bootstrap';
 import HeaderBar from '../components/HeaderBar';
 import { db } from "../firebase-config";
 import {
-    collection,
-    getDocs,
+  collection,
+  getDocs,
 } from "firebase/firestore";
 import RecipeCard from '../components/RecipeCard';
 import allergiesList from '../data/allergiesList';
 import cuisineList from '../data/cuisineList';
+import { reauthenticateWithPhoneNumber } from 'firebase/auth';
 
-function Home({ recipes, setRecipes, userdata}) {
+function Home({ recipes, setRecipes, userdata }) {
 
   //Search bar query
   const [query, setQuery] = useState("")
@@ -24,34 +25,55 @@ function Home({ recipes, setRecipes, userdata}) {
     const getRecipes = async () => {
       const data = await getDocs(recipesCollectionRef);
       setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(recipes)
     };
     getRecipes()
 
   }, [setRecipes]);
 
   //Get Filtered Recipes n
-  const getFilteredRecipes = (query  ,cuisineQuery) => {
-    if (!query && !cuisineQuery) {
+  const getFilteredRecipes = (query, cuisineQuery, allergyQuery) => {
+    if (!query && !cuisineQuery && !allergyQuery) {
       return recipes
     }
-    if (!cuisineQuery) {
-      return recipes.filter((recipe) => 
-      recipe.name.toLowerCase().includes(query.toLowerCase()))
+    if (!cuisineQuery && !allergyQuery) {
+      return recipes.filter((recipe) =>
+        recipe.name.toLowerCase().includes(query.toLowerCase())
+      )
     }
-    if (!query ) {
-      return recipes.filter((recipe) => 
-      recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase()))
+    if (!cuisineQuery && !query) {
+      return recipes.filter((recipe) => {
+        for (var i = 0; i < recipe.tags.length; i++) {
+          if (recipe.tags[i].value.toLowerCase().includes(allergyQuery.toLowerCase())) {
+            return false
+          }
+        }
+        return true
+      }
+      )
     }
-    return recipes.filter((recipe) => 
-    recipe.name.toLowerCase().includes(query.toLowerCase()) && recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase()))
+    if (!query && !allergyQuery) {
+      return recipes.filter((recipe) =>
+        recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase())
+      )
+    }
+    return recipes.filter((recipe) => {
+      recipe.name.toLowerCase().includes(query.toLowerCase()) &&
+        recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase()) &&
+        recipe.tags.map((tag) => {
+          tag.value.toLowerCase().includes(allergyQuery.toLowerCase())
+        })
+    }
+    )
   }
 
-  const filteredItems = getFilteredRecipes(query, cuisineQuery);
+  const filteredItems = getFilteredRecipes(query, cuisineQuery, allergyQuery);
 
   const handleCuisineSelect = (e) => {
-    console.log(e)
     setCuisineQuery(e)
+  }
+
+  const handleAllergySelect = (e) => {
+    setAllergyQuery(e)
   }
 
   return (
@@ -78,13 +100,13 @@ function Home({ recipes, setRecipes, userdata}) {
         <div className='col-12 py-4'>
           <p>Filters:</p>
           <div className='d-flex'>
-            <Dropdown className='mr-3'>
+            <Dropdown onSelect={handleAllergySelect} className='mr-3'>
               <Dropdown.Toggle className='dropdown'>
-                Allergies
+                I Am Allergic To {allergyQuery ? allergyQuery : ''}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {allergiesList.map((allergy) => {
-                  return <Dropdown.Item key={allergy.value}>{allergy.value}</Dropdown.Item>
+                  return <Dropdown.Item key={allergy.value} eventKey={allergy.value}>{allergy.value}</Dropdown.Item>
                 })}
               </Dropdown.Menu>
             </Dropdown>
@@ -102,21 +124,29 @@ function Home({ recipes, setRecipes, userdata}) {
           </div>
         </div>
       </Container>
-      {filteredItems.length > 0 
-      ? 
-      <RecipeCard
-        recipes={filteredItems}
-        userdata={userdata} />
-      : 
-      <Container className='text-center pt-4'>
-        <h1 >
-          Nothing was found...
-        </h1>
-        <p>Try searching for something else!</p>
-      </Container>
+      {filteredItems.length > 0
+        ?
+        <div>
+          <Container>
+            <div className='col-12 font-weight-bold'>
+              {allergyQuery ? 'Now showing recipes without ' + allergyQuery : ''}
+
+            </div>
+          </Container>
+          <RecipeCard
+            recipes={filteredItems}
+            userdata={userdata} />
+        </div>
+        :
+        <Container className='text-center pt-4'>
+          <h1 >
+            Nothing was found...
+          </h1>
+          <p>Try searching for something else!</p>
+        </Container>
       }
 
-        
+
     </div>
   )
 }
