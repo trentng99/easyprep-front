@@ -32,7 +32,7 @@ function BuildProfile({user, state, setState}) {
   }
 
   const listOfAllergies = allergiesList.map(
-    (allergy) => <ToggleButton id={allergy.value} key={allergy.value} value={allergy.value} onChange={handleCheckboxChange}>{allergy.value}</ToggleButton>
+    (allergy) => <ToggleButton id={allergy.value} key={allergy.value} value={allergy.value} variant='outline-primary' onChange={handleCheckboxChange}>{allergy.value}</ToggleButton>
   )
 
   return (

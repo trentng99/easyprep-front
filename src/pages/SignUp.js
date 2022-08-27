@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { db } from "../firebase-config";
 import {doc, setDoc} from "firebase/firestore";
+import Image from 'react-bootstrap/Image';
 
 function SignUp({ state, setState}) {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ function SignUp({ state, setState}) {
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleSubmit}>
         <div className="Auth-form-content">
+        <Image fluid className='logo pt-2 pb-4 w-100 px-5' src="easyprep2.png" alt="Cooking Image" />
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
             Already registered?{" "}

@@ -14,7 +14,7 @@ function CookSuccess() {
 
   return (
     <Container>
-        <HeaderBar />
+        <HeaderBar image="https://firebasestorage.googleapis.com/v0/b/agile-project-83be0.appspot.com/o/easyprep2.png?alt=media&token=05bc5ddc-ecc8-4085-8625-56093d47cb31"/>
         <Image className='w-100 mt-4' fluid src='/cooksuccess.png' alt="Cooking Image" />
         <h1 className='header-title text-center py-2'>Yay! You’ve cooked yourself a healthy meal</h1>
         <p className='text-center py-2'>Mercedem aut nummos unde unde extricat, amaras. Contra legem facit qui id facit quod lex prohibet.</p>

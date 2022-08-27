@@ -40,7 +40,7 @@ function BuildProfile({ user, state, setState }) {
     }
 
     const listOfAllergies = cuisineList.map(
-        (cuisine) => <ToggleButton id={cuisine.value} key={cuisine.value} value={cuisine.value} onChange={handleCheckboxChange}>{cuisine.value}</ToggleButton>
+        (cuisine) => <ToggleButton id={cuisine.value} key={cuisine.value} value={cuisine.value} variant='outline-primary' onChange={handleCheckboxChange}>{cuisine.value}</ToggleButton>
     )
 
     return (

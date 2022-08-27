@@ -19,7 +19,7 @@ function RecipeCard({recipes, userdata}) {
             {recipes.map((recipe, index) => {
                 return (
                     <div
-                        className='col-6 col-lg-3 p-3 fu'
+                        className='col-12 col-lg-3 p-3 fu'
                         key={index}
                         onClick={() => goRecipePage(
                             recipe

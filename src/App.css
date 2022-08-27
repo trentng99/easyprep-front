@@ -139,7 +139,7 @@ h5 {
 }
 
 .logo {
-  width: 50px;
+  width: 200px;
   color: white;
 }
 
@@ -155,4 +155,17 @@ h5 {
   border-radius: 1px;
   background-color: #FFFFFF;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2)
+}
+
+.background-blue {
+  background-color: #031D48;
+}
+
+.text {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 29px;
+  text-align: center;
 }

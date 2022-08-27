@@ -32,15 +32,15 @@ function Home({ recipes, setRecipes, userdata }) {
 
   //Get Filtered Recipes n
   const getFilteredRecipes = (query, cuisineQuery, allergyQuery) => {
-    if (!query && !cuisineQuery && !allergyQuery) {
-      return recipes
+    if (query) {
+      return recipes.filter((recipe) => 
+      recipe.name.toLowerCase().includes(query.toLowerCase()))
     }
-    if (!cuisineQuery && !allergyQuery) {
-      return recipes.filter((recipe) =>
-        recipe.name.toLowerCase().includes(query.toLowerCase())
-      )
+    if (cuisineQuery) {
+      return recipes.filter((recipe) => 
+      recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase()))
     }
-    if (!cuisineQuery && !query) {
+    if (allergyQuery) {
       return recipes.filter((recipe) => {
         for (var i = 0; i < recipe.tags.length; i++) {
           if (recipe.tags[i].value.toLowerCase().includes(allergyQuery.toLowerCase())) {
@@ -51,19 +51,7 @@ function Home({ recipes, setRecipes, userdata }) {
       }
       )
     }
-    if (!query && !allergyQuery) {
-      return recipes.filter((recipe) =>
-        recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase())
-      )
-    }
-    return recipes.filter((recipe) => {
-      recipe.name.toLowerCase().includes(query.toLowerCase()) &&
-        recipe.cuisine.toLowerCase().includes(cuisineQuery.toLowerCase()) &&
-        recipe.tags.map((tag) => {
-          tag.value.toLowerCase().includes(allergyQuery.toLowerCase())
-        })
-    }
-    )
+    return recipes
   }
 
   const filteredItems = getFilteredRecipes(query, cuisineQuery, allergyQuery);
@@ -80,9 +68,9 @@ function Home({ recipes, setRecipes, userdata }) {
     <div className='mb-2 App min-vh-100 justify-content-center align-items-center'>
       <div className="headerPart pb-5 pt-4">
         <Container>
-          <HeaderBar />
+          <HeaderBar image="/chef.png"/>
           <h1 className="text-center text-orange font-weight-bold" xs={12}>Hey {userdata.name}!</h1>
-          <p className="text-center text-white" xs={12}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p className="text-center text-white" xs={12}>Welcome to Easyprep where you can filter and view recipes that you want to cook. Save the recipes that you like</p>
           <InputGroup className="col-12">
             <FormControl
               placeholder="Search"
@@ -105,6 +93,7 @@ function Home({ recipes, setRecipes, userdata }) {
                 I Am Allergic To {allergyQuery ? allergyQuery : ''}
               </Dropdown.Toggle>
               <Dropdown.Menu>
+              <Dropdown.Item eventKey=''>Nothing</Dropdown.Item>
                 {allergiesList.map((allergy) => {
                   return <Dropdown.Item key={allergy.value} eventKey={allergy.value}>{allergy.value}</Dropdown.Item>
                 })}

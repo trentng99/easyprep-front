@@ -14,9 +14,9 @@ function LandingScreen({user}) {
     <Container className='d-flex'>
       {/* Logo */}
       <Stack gap={4}>
-        <Row>
+        <Row className='py-5'>
           <Col xs={{ span: 6, offset: 3 }} sm={{ span: 2, offset: 0 }}>
-            <Image fluid src='/facebook.svg' alt="Cooking Image" />
+            <Image fluid src='/easyprep2.png' alt="Cooking Image" />
           </Col>
         </Row>
         <Row className='my-4 d-flex align-items-center'>

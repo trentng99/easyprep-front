@@ -14,7 +14,7 @@ function Profile({userdata}) {
 
     return (
         <Container>
-            <HeaderBar />
+            <HeaderBar image="easyprep2.png"/>
             <h1 className='py-3'>{userdata.name}'s Profile</h1>
             <div className="d-grid gap-2">
                 <Button variant="primary" size="lg" onClick={()=>directTo('saved-recipes')}>

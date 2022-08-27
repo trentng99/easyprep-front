@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 import { useAuth } from '../contexts/AuthContext'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import Image from 'react-bootstrap/Image';
 
 function Login({user}) {
   const emailRef = useRef()
@@ -28,6 +29,7 @@ function Login({user}) {
       {error}
     <form onSubmit={handleSubmit} className="Auth-form">
       <div className="Auth-form-content">
+      <Image fluid className='logo pt-2 pb-4 w-100 px-5' src="easyprep2.png" alt="Cooking Image" />
         <h3 className="Auth-form-title">Log In</h3>
         <div className="text-center">
             Don't have an account?{" "}
