@@ -14,7 +14,6 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children, user, setUser }) {
-
     onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
       });

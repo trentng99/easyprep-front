@@ -2,12 +2,8 @@ import React from 'react'
 import cuisineList from '../data/cuisineList';
 import { ToggleButtonGroup, Container, ToggleButton, Stack } from 'react-bootstrap';
 import { db } from '../firebase-config';
-import {
-    doc,
-    updateDoc,
-} from "firebase/firestore";
+import {doc,updateDoc} from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
-
 
 function BuildProfile({ user, state, setState }) {
     let newArray
@@ -39,8 +35,10 @@ function BuildProfile({ user, state, setState }) {
         navigate('/home')
     }
 
+    //Return all the allergies for user to choose
     const listOfAllergies = cuisineList.map(
-        (cuisine) => <ToggleButton id={cuisine.value} key={cuisine.value} value={cuisine.value} variant='outline-primary' onChange={handleCheckboxChange}>{cuisine.value}</ToggleButton>
+        (cuisine) => <ToggleButton id={cuisine.value} key={cuisine.value} value={cuisine.value} variant='outline-primary' 
+        onChange={handleCheckboxChange}>{cuisine.value}</ToggleButton>
     )
 
     return (

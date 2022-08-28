@@ -1,14 +1,14 @@
 import React, { useState, useEffect}  from 'react';
-import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { db } from "./firebase-config";
 import {
   getDoc,
   doc
 } from "firebase/firestore";
+import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import LandingScreen from './pages/LandingScreen';
 import SignUp from './pages/SignUp';
@@ -38,17 +38,17 @@ function App() {
   })
 
   useEffect(() => {
-    if(user) {
-      if (user.email) {
-        const usersCollectionRef = doc(db, "users", user.email);
+    if(user) { //Check for user
+      if (user.email) { //Check if user is signed in
+        const usersCollectionRef = doc(db, "users", user.email); //Reference to the document in users in firebase
         const getUsers = async () => {
-          const data = await getDoc(usersCollectionRef);
-          setUserData(data.data());
+          const data = await getDoc(usersCollectionRef); //Get the user's detail
+          setUserData(data.data()); //Populate the userdata state with it's details
         };
         getUsers();
       }
     }
-  }, [user]);
+  }, [user]); //Re-renders the page whenver user state is changed
 
   return (
     <Router>

@@ -31,7 +31,12 @@ function SignUp({ state, setState}) {
         setError('Password do not match')
       }
     } catch {
-      setError("An error has occured.")
+      if(passwordRef.current.value.length > 5) {
+        setError("Email address have been taken")
+      } else {
+        setError("Password must be more than 6 characters")
+
+      }
     }
   }
 
