@@ -57,14 +57,14 @@ function App() {
         <Route path="/" element={<LandingScreen user={user}/>} />
         <Route path="/signup" element={<SignUp  user={user} state={state} setState={setState}/>} />
         <Route path="/login" element={<Login user={user}/>} />
+        <Route path="/home" element = {<Home recipes={recipes} setRecipes={setRecipes} userdata={userdata}/>} />
+        <Route path="/recipe/:Name" element = {<RecipePage user={user} userdata={userdata} setUserData={setUserData}/> }/>
         <Route element={<PrivateRoute user={user} redirectPath="/login" />}>
-            <Route path="/home" element = {<Home recipes={recipes} setRecipes={setRecipes} userdata={userdata}/>} />
             <Route path="/buildallergies" element = {<BuildAllergies user={user} state={state} setState={setState}/>} />
             <Route path="/buildcuisine" element = {<BuildCuisine user={user} state={state} setState={setState}/>} />
             <Route path="/profile" element = {<Profile userdata={userdata}/>} />
             <Route path="/profile/saved-recipes" element = {<SavedRecipes userdata={userdata}/>} />
             <Route path="/profile/cooked-recipes" element = {<CookedRecipes userdata={userdata}/>} />
-            <Route path="/recipe/:Name" element = {<RecipePage user={user} userdata={userdata} setUserData={setUserData}/> }/>
             <Route path="/cooksuccess" element = {<CookSuccess/> }/>
         </Route>
       </Routes>

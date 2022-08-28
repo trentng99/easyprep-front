@@ -12,7 +12,6 @@ import cuisineList from '../data/cuisineList';
 import { reauthenticateWithPhoneNumber } from 'firebase/auth';
 
 function Home({ recipes, setRecipes, userdata }) {
-
   //Search bar query
   const [query, setQuery] = useState("")
   const [cuisineQuery, setCuisineQuery] = useState("")
@@ -30,7 +29,7 @@ function Home({ recipes, setRecipes, userdata }) {
 
   }, [setRecipes]);
 
-  //Get Filtered Recipes n
+  //Get Filtered Recipes
   const getFilteredRecipes = (query, cuisineQuery, allergyQuery) => {
     if (query) {
       return recipes.filter((recipe) => 

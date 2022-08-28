@@ -15,14 +15,16 @@ function RecipePage({ userdata, user, setUserData }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (user.email) {
-            userCollectionRef = doc(db, "users", user.email)
-            updateDoc(userCollectionRef, userdata)
+        if(user) {
+            if (user.email) {
+                userCollectionRef = doc(db, "users", user.email)
+                updateDoc(userCollectionRef, userdata)
+            }
         }
     }, [userdata, userCollectionRef])
 
 
-    if (user.email) {
+    if (user && user.email) {
         userCollectionRef = doc(db, "users", user.email)
     }
 

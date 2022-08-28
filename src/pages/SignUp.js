@@ -10,7 +10,6 @@ import Image from 'react-bootstrap/Image';
 
 function SignUp({ state, setState}) {
   const navigate = useNavigate();
-  const emailRef = useRef()
   const passwordRef = useRef()
   const cPasswordRef = useRef()
   const { register } = useAuth()
@@ -91,7 +90,6 @@ function SignUp({ state, setState}) {
             <input
               name='email'
               type="email"
-              ref={emailRef}
               onChange={handleChange}
               className="form-control mt-1"
               placeholder="Email Address"

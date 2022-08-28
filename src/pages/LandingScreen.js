@@ -33,6 +33,9 @@ function LandingScreen({user}) {
             <Button variant="primary" size="lg" href='/signup'>
               Sign Up For An Account
             </Button>
+            <Button variant="outline-secondary" size="lg" href='/home'>
+              Continue as Guest
+            </Button>
             <div className="text-center mt-3">
               Have an account?{" "}
               <a className="link-primary" href='/login'>
